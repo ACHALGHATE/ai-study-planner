@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Study Planner</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1c1c2b, #2c3e50);
+            color: white;
+        }
+        
+        .container {
+            width: 420px;
+            margin: 80px auto;
+            padding: 25px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        input {
+            width: 85%;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border: none;
+        }
+        
+        button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background-color: #3cb371;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #2e8b57;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        
+        .plan {
+            margin-top: 10px;
+            text-align: left;
+            white-space: pre-line;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h2>Smart Study Planner</h2>
+        <p>Enter your routine to check stress level</p>
+
+        <form action="/predict" method="post">
+            <input type="number" name="study" placeholder="Study hours" required>
+            <input type="number" name="sleep" placeholder="Sleep hours" required>
+            <input type="number" name="screen" placeholder="Screen time" required>
+            <input type="number" name="difficulty" placeholder="Difficulty (1-10)" required>
+
+            <button type="submit">Check</button>
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <p><b>Stress Level:</b> {{ result }}</p>
+
+            <div class="plan">
+                <b>Study Plan:</b> {{ plan }}
+            </div>
+        </div>
+        {% endif %} {% if show_button %}
+        <form action="/" method="get">
+            <button type="submit">Check Again</button>
+        </form>
+        {% endif %}
+
+    </div>
+
+</body>
+
+</html>
