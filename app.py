@@ -3,33 +3,26 @@ import pickle
 import numpy as np
 
 app = Flask(__name__)
-
-# load model
 with open("model/model.pkl", "rb") as file:
     model = pickle.load(file)
-
 
 @app.route("/")
 def home():
     return render_template("index.html")
 
-
 @app.route("/predict", methods=["POST"])
 def predict():
 
-    # get values from form
+   
     study_hours = int(request.form.get("study"))
     sleep_hours = int(request.form.get("sleep"))
     screen_time = int(request.form.get("screen"))
     difficulty = int(request.form.get("difficulty"))
 
-    # prepare data
+    
     input_data = np.array([[study_hours, sleep_hours, screen_time, difficulty]])
-
-    # prediction
     prediction = model.predict(input_data)[0]
 
-    # result + plan
     if prediction == 0:
         result = "Low Stress"
         plan = "You can increase study time and maintain consistency."
@@ -42,7 +35,7 @@ def predict():
         result = "High Stress"
         plan = "Reduce workload and take proper rest."
 
-    # 🔥 TERMINAL OUTPUT
+   
     print("\nNew Prediction Request")
     print(f"Study Hours   : {study_hours}")
     print(f"Sleep Hours   : {sleep_hours}")
